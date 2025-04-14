@@ -10,7 +10,7 @@ class Project(BaseModel):
     budget: PositiveFloat
     deadline: date
     client: Profile
-    freelancer: Profile
+    freelancer: Annotated[Profile | None, Field(default=None)]
 
     @field_validator("deadline", mode="after")
     @classmethod

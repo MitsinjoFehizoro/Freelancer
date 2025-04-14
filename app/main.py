@@ -2,6 +2,7 @@ from pydantic import ValidationError
 from uuid import uuid4
 from .models.profile import Profile
 from .models.project import Project
+from .models.contract import Contract
 from datetime import date
 
 data_client = {
@@ -23,12 +24,19 @@ data_freelancer = {
     "skills": ["python", "javascript"],
 }
 
-
 data_project = {
     "title": "teste",
     "description": "teste tesste teste teste",
     "budget": 500,
-    "deadline": date(2025, 4, 17),
+    "deadline": date(2025, 8, 17),
+}
+
+data_contract = {
+    "id": uuid4(),
+    "start_date": date(2025, 4, 17),
+    "end_date": date(2025, 6, 17),
+    "status": "active",
+    "paiement_advance": 200,
 }
 
 print("---------------------------------- Debut ----------------------------------\n")
@@ -46,6 +54,11 @@ try:
     data_project["freelancer"] = freelancer
     project = Project.model_validate(data_project)
     print(f"{project}\n")
+
+    print("=============== CONTRACT ===============")
+    data_contract["project"] = project
+    contract = Contract.model_validate(data_contract)
+    print(f"{contract}\n")
 
 
 except ValidationError as e:
